@@ -12,7 +12,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface EmpleadoMapper {
 
-    @Mapping(target = "id", ignore = true)
     EmpleadoDTO toDTO(Empleado model);
 
     List<EmpleadoDTO> toDTO(List<Empleado> model);
