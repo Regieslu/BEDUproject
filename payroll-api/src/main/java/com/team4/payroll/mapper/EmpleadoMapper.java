@@ -16,6 +16,6 @@ public interface EmpleadoMapper {
 
     List<EmpleadoDTO> toDTO(List<Empleado> model);
     
-    @Mapping(target = "idEmpleado", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Empleado toModel(CreateEmpleadoDTO dto);
 }
