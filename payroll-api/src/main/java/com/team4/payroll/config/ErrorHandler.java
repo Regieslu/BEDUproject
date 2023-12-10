@@ -1,6 +1,7 @@
 package com.team4.payroll.config;
 
 import com.team4.payroll.dto.ErrorDTO;
+import com.team4.payroll.exception.EmpleadoNotFoundException;
 import com.team4.payroll.exception.RuntimeException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,6 +21,11 @@ public class ErrorHandler {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         List<String> errors = fieldErrors.stream().map(x -> x.getDefaultMessage()).toList();
         return new ErrorDTO("ERR_VALID", "Hubo un error al procesar los datos de entrada", errors);
+    }
+
+    @ExceptionHandler(EmpleadoNotFoundException.class)
+    public ErrorDTO notFoundError(EmpleadoNotFoundException ex) {
+        return new ErrorDTO(ex.getCode(), ex.getMessage(), ex.getDetails());        
     }
 
     @ExceptionHandler(RuntimeException.class)

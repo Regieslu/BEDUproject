@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CreateEmpleadoDTO {
+public class UpdateEmpleadoDTO {
 
     @Schema(description = "Nombre del empleado", example = "Juan")
     @NotBlank
@@ -18,4 +18,5 @@ public class CreateEmpleadoDTO {
     @Email
     private String email;
     
+
 }

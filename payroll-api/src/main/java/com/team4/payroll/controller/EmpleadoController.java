@@ -1,8 +1,10 @@
 package com.team4.payroll.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.payroll.dto.CreateEmpleadoDTO;
 import com.team4.payroll.dto.EmpleadoDTO;
+import com.team4.payroll.dto.UpdateEmpleadoDTO;
 import com.team4.payroll.exception.EmpleadoNotFoundException;
 import com.team4.payroll.service.EmpleadoService;
 
@@ -31,14 +34,14 @@ public class EmpleadoController {
     private EmpleadoService service;
 
     @Operation(summary = "Obtener todos los empleados", description = "Obtener la lista que contiene todos los empleados")
-    @GetMapping
+    @GetMapping({"", "/"})
     @ResponseStatus(HttpStatus.OK)
     public List<EmpleadoDTO> findAll() {
         return service.findAll();
     }
 
     @Operation(summary = "Crear nuevo empleado")
-    @PostMapping
+    @PostMapping({"", "/"})
     @ResponseStatus(HttpStatus.CREATED)
     public EmpleadoDTO save(@Valid @RequestBody CreateEmpleadoDTO data) {
         return service.save(data);
@@ -49,6 +52,20 @@ public class EmpleadoController {
     @ResponseStatus(HttpStatus.OK)
     public EmpleadoDTO findById(@PathVariable Long id) throws EmpleadoNotFoundException {
         return service.findById(id);  
+    }
+
+    @Operation(summary = "Eliminar empleado por ID")
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws EmpleadoNotFoundException {
+        service.delete(id);
+    }
+
+    @Operation(summary = "Actualizar empleado por ID")
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable Long id, @Valid @RequestBody UpdateEmpleadoDTO data) throws EmpleadoNotFoundException {
+        service.update(id, data);
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.team4.payroll.dto.CreateEmpleadoDTO;
 import com.team4.payroll.dto.EmpleadoDTO;
+import com.team4.payroll.dto.UpdateEmpleadoDTO;
 import com.team4.payroll.exception.EmpleadoNotFoundException;
 import com.team4.payroll.mapper.EmpleadoMapper;
 import com.team4.payroll.model.Empleado;
@@ -35,5 +36,23 @@ public class EmpleadoService {
             throw new EmpleadoNotFoundException(id);
         }
         return mapper.toDTO(result.get());
+    }
+
+    public void delete(Long id) throws EmpleadoNotFoundException {
+        if (!repository.existsById(id)) {
+            throw new EmpleadoNotFoundException(id);
+        }
+        repository.deleteById(id);
+    }
+
+    public void update(Long id, UpdateEmpleadoDTO data) throws EmpleadoNotFoundException {
+        Optional<Empleado> result = repository.findById(id);
+        if (!result.isPresent()) {
+            throw new EmpleadoNotFoundException(id);
+        }
+
+        Empleado empleado = result.get();
+        mapper.update(empleado, data);
+        repository.save(empleado);
     }
 }
