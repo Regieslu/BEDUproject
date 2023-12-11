@@ -13,4 +13,8 @@ public class EmpleadoDTO {
     private String apellido;
     @Schema(description = "Email del empleado", example = "juan@email.com")
     private String email;
+    @Schema(description = "Puesto de empleado")
+    private String puesto;
+    @Schema(description = "Departamento")
+    private String departamento;
 }

@@ -17,5 +17,11 @@ public class CreateEmpleadoDTO {
     @Schema(description = "Email del empleado", example = "juan@email.com")
     @Email
     private String email;
+    @NotBlank
+    @Schema(description = "Puesto de empleado")
+    private String puesto;
+    @NotBlank
+    @Schema(description = "Departamento")
+    private String departamento;
     
 }
