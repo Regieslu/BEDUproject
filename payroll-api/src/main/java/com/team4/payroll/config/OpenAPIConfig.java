@@ -5,8 +5,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @OpenAPIDefinition(
     info = @Info(
-        title = "API de Nómina de sueldos",
-        description = "API para manejo de nómina de sueldos.",
+        title = "API de Nómina de Empleados",
+        description = "API para el registro de empleados.",
         version = "v0.2.0"
     )
 )
