@@ -17,6 +17,12 @@ public class UpdateEmpleadoDTO {
     @Schema(description = "Email del empleado", example = "juan@email.com")
     @Email
     private String email;
+    @Schema(description = "Puesto de empleado")
+    @NotBlank
+    private String puesto;
+    @NotBlank
+    @Schema(description = "Departamento")
+    private String departamento;
     
 
 }
