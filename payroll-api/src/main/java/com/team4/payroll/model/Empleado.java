@@ -17,7 +17,7 @@ public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
+
     @Column(length = 45, nullable = false)
     private String nombre;
     @Column(length = 45, nullable = false)
@@ -28,5 +28,5 @@ public class Empleado {
     private String puesto;
     @Column(length = 45, nullable = false)
     private String departamento;
-    
+
 }
