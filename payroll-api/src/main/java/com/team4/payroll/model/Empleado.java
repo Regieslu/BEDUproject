@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +17,7 @@ public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    
     @Column(length = 45, nullable = false)
     private String nombre;
     @Column(length = 45, nullable = false)
@@ -30,13 +28,5 @@ public class Empleado {
     private String puesto;
     @Column(length = 45, nullable = false)
     private String departamento;
-
     
-    @ManyToOne
-    @JoinColumn(name = "oficinaId", referencedColumnName = "id",nullable = true)
-    private Oficina oficina;
-
-    @ManyToOne
-    @JoinColumn(name = "usuarioId", referencedColumnName = "id",nullable = true)
-    private Usuario usuario;
 }
