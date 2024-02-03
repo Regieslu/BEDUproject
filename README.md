@@ -1,6 +1,6 @@
 # BEDUproject
 
-PayrollAPI es una herramienta que facilita el registro de empleados en una empresa. Con ella, podemos gestionar la información de los empleados mediante su número de identificación, nombre, apellido, correo electrónico, cargo, departamento y período vacacional.
+PayrollAPI es una herramienta que facilita el registro de empleados en una empresa. Con ella, podemos gestionar la información de los empleados mediante su número de identificación, nombre, apellido, correo electrónico, cargo y departamento. 
 
 ## Autores
 
