@@ -1,5 +1,6 @@
 package com.team4.payroll.controller;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,14 +59,14 @@ public class EmpleadoController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws EmpleadoNotFoundException {
-        service.delete(id);
+        service.deleteById(id);
     }
 
     @Operation(summary = "Actualizar empleado por ID")
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Long id, @Valid @RequestBody UpdateEmpleadoDTO data) throws EmpleadoNotFoundException {
-        service.update(id, data);
+    public void update(@Param("id") long id, @Valid @RequestBody UpdateEmpleadoDTO dto) throws EmpleadoNotFoundException {
+        service.update(id, dto);
     }
 
 }

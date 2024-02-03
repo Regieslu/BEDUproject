@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class Empleado {
     private String nombre;
     @Column(length = 45, nullable = false)
     private String apellido;
+    @Email
     @Column(length = 45, nullable = false)
     private String email;
     @Column(length = 45, nullable = false)

@@ -38,7 +38,7 @@ public class EmpleadoService {
         return mapper.toDTO(result.get());
     }
 
-    public void delete(Long id) throws EmpleadoNotFoundException {
+    public void deleteById(Long id) throws EmpleadoNotFoundException {
         if (!repository.existsById(id)) {
             throw new EmpleadoNotFoundException(id);
         }
@@ -55,4 +55,6 @@ public class EmpleadoService {
         mapper.update(empleado, data);
         repository.save(empleado);
     }
+
+
 }
