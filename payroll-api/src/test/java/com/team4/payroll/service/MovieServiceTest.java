@@ -67,7 +67,7 @@ public class MovieServiceTest {
     }
 
     @Test
-    @DisplayName("Service should save a movie in repository")
+    @DisplayName("Service should save an employee in repository")
     void saveTest() {
         CreateEmpleadoDTO dto = new CreateEmpleadoDTO();
 
