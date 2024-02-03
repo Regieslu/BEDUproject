@@ -39,7 +39,7 @@ public class EmpleadoService {
     }
 
     public void deleteById(Long id) throws EmpleadoNotFoundException {
-        if (!repository.existsById(id)) {
+        if (repository.existsById(id)) {
             throw new EmpleadoNotFoundException(id);
         }
         repository.deleteById(id);
