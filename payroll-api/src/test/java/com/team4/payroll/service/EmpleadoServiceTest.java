@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class MovieServiceTest {
+public class EmpleadoServiceTest {
 
     @MockBean
     private EmpleadoRepository repository;
@@ -123,3 +123,4 @@ public class MovieServiceTest {
         verify(repository, times(1)).deleteById(3l);
     }
 }
+
