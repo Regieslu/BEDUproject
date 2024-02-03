@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,33 +19,30 @@ import lombok.Setter;
 @Table(name = "Orden")
 public class Orden {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idOrden")
-    private int idOrden;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    @Column(name = "fecha")
+    @Column(name = "fecha",nullable = false)
     private Date fecha;
 
-    @Column(name = "total")
+    @Column(name = "total",nullable = false)
     private double total;
 
     @Column(name = "estado")
     private String estado;
 
-    @Column(name = "direccion_entrega")
+    @Column(name = "direccion_entrega",nullable = false)
     private String direccionEntrega;
 
-    @Column(name = "metodo_pago")
+    @Column(name = "metodo_pago",nullable = false)
     private String metodoPago;
 
-    @Column(name = "numero_tarjeta")
-    private String numeroTarjeta;
+    @ManyToOne
+    @JoinColumn(name = "clienteId", referencedColumnName = "id",nullable = true)
+    private Cliente cliente;
 
-    @Column(name = "fecha_expiracion_tarjeta")
-    private Date fechaExpiracionTarjeta;
+    @ManyToOne
+    @JoinColumn(name = "productoId", referencedColumnName = "id",nullable = true)
+    private Producto producto;
 
-    @Column(name = "codigo_seguridad_tarjeta")
-    private String codigoSeguridadTarjeta;
-
-    // Otros campos y relaciones
 }

@@ -15,23 +15,24 @@ import jakarta.persistence.Table;
 @Table(name = "Actividad")
 public class Actividad {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idActividad")
-    private int idActividad;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "idEmpleado")
-    private Empleado empleado;
-
-    @Column(name = "descripcion")
+    @Column(name = "descripcion",nullable = false)
     private String descripcion;
 
-    @Column(name = "fechaInicio")
+    @Column(name = "fechaInicio",nullable = true)
     private LocalDateTime fechaInicio;
 
-    @Column(name = "fechaFin")
+    @Column(name = "fechaFin",nullable = true)
     private LocalDateTime fechaFin;
 
-   
+    @Column(name = "detalles",nullable = false)
+    private String detalles;
+
+    @ManyToOne
+    @JoinColumn(name = "empleadoId", referencedColumnName = "id")
+    private Empleado empleado;
 
 }

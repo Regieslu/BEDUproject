@@ -15,23 +15,22 @@ import lombok.Setter;
 @Table(name = "Proveedor")
 public class Proveedor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idProveedor")
-    private int idProveedor;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre",nullable = false)
     private String nombre;
 
-    @Column(name = "direccion")
+    @Column(name = "direccion",nullable = false)
     private String direccion;
 
-    @Column(name = "telefono")
+    @Column(name = "telefono",nullable = false)
     private String telefono;
 
-    @Column(name = "correo_electronico")
+    @Column(name = "correo_electronico",nullable = false,unique = true)
     private String correoElectronico;
 
-    @Column(name = "tipo_servicio")
+    @Column(name = "tipo_servicio",nullable = false)
     private String tipoServicio;
     
 }

@@ -13,23 +13,27 @@ import jakarta.persistence.GeneratedValue;
 @Table(name = "Usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUsuario")
-    private int idUsuario;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre",nullable = false)
     private String nombre;
 
-    @Column(name = "apellido")
+    @Column(name = "apellido",nullable = false)
     private String apellido;
 
-    @Column(name = "correoElectronico")
+    @Column(name = "correoElectronico",nullable = false,unique = true)
     private String correoElectronico;
 
-    @Column(name = "nombreUsuario")
+    @Column(name = "nombreUsuario",nullable = true)
     private String nombreUsuario;
 
-    @Column(name = "contrasena")
+    @Column(name = "contrasena",nullable = false)
     private String contrasena;
+
+    @Column(name = "isAdmin", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private Boolean isAdmin;
+    
 
 }
