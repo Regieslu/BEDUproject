@@ -24,16 +24,16 @@ public class EmpleadoRepositoryTest {
 
     @Test
     @DisplayName("Repository should be injected")
-    void smokeTest(){
+    void smokeTest() {
         assertNotNull(repository);
     }
 
     @Test
     @DisplayName("Repository should be filter employees by name")
-    void findByNameTest(){
-        Empleado empleado1 =  new Empleado();
-        Empleado empleado2 =  new Empleado();
-        Empleado empleado3 =  new Empleado();
+    void findByNameTest() {
+        Empleado empleado1 = new Empleado();
+        Empleado empleado2 = new Empleado();
+        Empleado empleado3 = new Empleado();
 
         empleado1.setNombre("Cristian");
         empleado1.setApellido("Padilla");

@@ -36,16 +36,16 @@ public class EmpleadoServiceTest {
 
     @Test
     @DisplayName("Service should be injected")
-    void smokeTest (){
+    void smokeTest() {
         assertNotNull(service);
     }
 
     @Test
     @DisplayName("Service should return employee from repository")
-            void findAllTest() {
+    void findAllTest() {
         List<Empleado> data = new LinkedList<>();
 
-        Empleado empleado =  new Empleado();
+        Empleado empleado = new Empleado();
 
         empleado.setId(9);
         empleado.setNombre("Ramiro");
@@ -92,6 +92,7 @@ public class EmpleadoServiceTest {
         assertEquals(model.getPuesto(), result.getPuesto());
         assertEquals(model.getEmail(), result.getEmail());
     }
+
     @Test
     @DisplayName("Service should update an employee in repository")
     void updateTest() throws EmpleadoNotFoundException {
@@ -123,4 +124,3 @@ public class EmpleadoServiceTest {
         verify(repository, times(1)).deleteById(3l);
     }
 }
-

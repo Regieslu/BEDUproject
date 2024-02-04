@@ -20,9 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest (classes = EmpleadoController.class)
+@SpringBootTest(classes = EmpleadoController.class)
 public class EmpleadoControllerTest {
 
     @MockBean
@@ -32,13 +31,13 @@ public class EmpleadoControllerTest {
 
     @Test
     @DisplayName("Controller should be injected")
-    void smokeTest(){
+    void smokeTest() {
         assertNotNull(controller);
     }
 
     @Test
     @DisplayName("Controller should return a list of employees")
-    void findAllTest(){
+    void findAllTest() {
         List<EmpleadoDTO> data = new LinkedList<>();
 
         EmpleadoDTO empleado = new EmpleadoDTO();
@@ -53,21 +52,21 @@ public class EmpleadoControllerTest {
 
         when(service.findAll()).thenReturn(data);
 
+        List<EmpleadoDTO> result = controller.findAll();
 
-       List<EmpleadoDTO> result = controller.findAll();
-
-       assertNotNull(result);
-       assertTrue(result.size() > 0);
-       assertEquals(empleado.getId(), result.get(0).getId());
-       assertEquals(empleado.getApellido(), result.get(0).getApellido());
-       assertEquals(empleado.getEmail(), result.get(0).getEmail());
-       assertEquals(empleado.getDepartamento(), result.get(0).getDepartamento());
-       assertEquals(empleado.getPuesto(), result.get(0).getPuesto());
+        assertNotNull(result);
+        assertTrue(result.size() > 0);
+        assertEquals(empleado.getId(), result.get(0).getId());
+        assertEquals(empleado.getApellido(), result.get(0).getApellido());
+        assertEquals(empleado.getEmail(), result.get(0).getEmail());
+        assertEquals(empleado.getDepartamento(), result.get(0).getDepartamento());
+        assertEquals(empleado.getPuesto(), result.get(0).getPuesto());
 
     }
+
     @Test
     @DisplayName("Controller should be save a employee")
-    void saveTest(){
+    void saveTest() {
         CreateEmpleadoDTO dto = new CreateEmpleadoDTO();
         dto.setNombre("Fernanda");
         dto.setApellido("Perea");
