@@ -100,19 +100,19 @@ public class EmpleadoServiceTest {
         dto.setNombre("Alberto");
         dto.setApellido("Villa");
 
-        Empleado movie = new Empleado();
+        Empleado empleado = new Empleado();
 
-        movie.setId(6);
-        movie.setNombre("Alan");
-        movie.setApellido("Lara");
+        empleado.setId(6);
+        empleado.setNombre("Alan");
+        empleado.setApellido("Lara");
 
-        when(repository.findById(anyLong())).thenReturn(Optional.of(movie));
+        when(repository.findById(anyLong())).thenReturn(Optional.of(empleado));
 
         service.update(6L, dto);
 
-        assertEquals(dto.getNombre(), movie.getNombre());
-        assertEquals(dto.getApellido(), movie.getApellido());
-        verify(repository, times(1)).save(movie);
+        assertEquals(dto.getNombre(), empleado.getNombre());
+        assertEquals(dto.getApellido(), empleado.getApellido());
+        verify(repository, times(1)).save(empleado);
     }
 
     @Test

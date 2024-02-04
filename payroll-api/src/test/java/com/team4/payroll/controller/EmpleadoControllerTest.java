@@ -1,6 +1,5 @@
-package controller;
+package com.team4.payroll.controller;
 
-import com.team4.payroll.controller.EmpleadoController;
 import com.team4.payroll.dto.CreateEmpleadoDTO;
 import com.team4.payroll.dto.EmpleadoDTO;
 import com.team4.payroll.dto.UpdateEmpleadoDTO;
