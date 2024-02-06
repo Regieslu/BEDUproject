@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = EmpleadoController.class)
-public class EmpleadoControllerTest {
+class EmpleadoControllerTest {
 
     @MockBean
     private EmpleadoService service;

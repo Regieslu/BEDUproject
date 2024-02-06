@@ -16,10 +16,13 @@ import java.util.Optional;
 
 @Service
 public class EmpleadoService {
-    @Autowired
-    private EmpleadoRepository repository;
-    @Autowired
-    private EmpleadoMapper mapper;
+    private final EmpleadoRepository repository;
+    private final EmpleadoMapper mapper;
+
+    public EmpleadoService(EmpleadoRepository repository, EmpleadoMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     public List<EmpleadoDTO> findAll() {
         return mapper.toDTO(repository.findAll());

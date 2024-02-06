@@ -103,7 +103,7 @@ class EmpleadoControllerE2ETest {
         List<EmpleadoDTO> response = mapper.readValue(content, listTypeReference);
 
         // Hacemos las verificaciones basadas en los objetos
-        assertTrue(response.size() == 2);
+        assertEquals(2, response.size());
         assertEquals(empleado.getNombre(), response.get(0).getNombre());
         assertEquals(empleado2.getDepartamento(), response.get(1).getDepartamento());
     }

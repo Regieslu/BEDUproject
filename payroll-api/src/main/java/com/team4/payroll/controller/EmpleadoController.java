@@ -31,9 +31,15 @@ import org.springframework.http.HttpStatus;
 @RequestMapping("empleados")
 public class EmpleadoController {
 
-    @Autowired
-    private EmpleadoService service;
+    
+    private final EmpleadoService service;
 
+    @Autowired // This annotation is optional since Spring 4.3 for constructor injection
+    public EmpleadoController(EmpleadoService service) {
+        this.service = service;
+    }
+
+    
     @Operation(summary = "Obtener todos los empleados", description = "Obtener la lista que contiene todos los empleados")
     @GetMapping({"", "/"})
     @ResponseStatus(HttpStatus.OK)
