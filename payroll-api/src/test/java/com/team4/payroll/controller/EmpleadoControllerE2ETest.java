@@ -21,10 +21,15 @@ import com.team4.payroll.dto.ErrorDTO;
 import com.team4.payroll.model.Empleado;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.http.MediaType;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -108,25 +113,24 @@ class EmpleadoControllerE2ETest {
     void titleMissingInRequestBodyTest() throws Exception {
         MvcResult result = mockMvc
                 .perform(post("/empleados").contentType("application/json").content("{\"apellido\":\"Luna\"}"))
-                
+
                 .andReturn();
-    
+
         String content = result.getResponse().getContentAsString();
-    
+
         // Definir el mensaje de error esperado
         String expectedResponse = "{\"code\":\"ERR_VALID\",\"message\":\"Hubo un error al procesar los datos de entrada\",\"details\":[\"must not be blank\",\"must not be blank\",\"must not be blank\"]}";
-    
+
         // Comparar la respuesta con el mensaje de error esperado
         assertEquals(expectedResponse, content);
     }
-    
 
     @Test
     @DisplayName("POST /empleados should return an error if apellido is missing")
     void yearMissingInRequestBodyTest() throws Exception {
         MvcResult result = mockMvc
                 .perform(post("/empleados").contentType("application/json").content("{\"nombre\":\"Emilio\"}"))
-            
+
                 .andReturn();
 
         // Leemos el contenido con caracteres de acentos y ñ
@@ -142,4 +146,116 @@ class EmpleadoControllerE2ETest {
 
         assertEquals("must not be blank", details.get(0));
     }
+
+    @Test
+    @DisplayName("GET /empleados/{id} should return the correct employee")
+    void getEmpleadoByIdTest() throws Exception {
+        Empleado empleado = new Empleado();
+        empleado.setNombre("John");
+        empleado.setApellido("Doe");
+        empleado.setEmail("john.doe@example.com");
+        empleado.setPuesto("Software Engineer");
+        empleado.setDepartamento("Engineering");
+
+        Empleado savedEmpleado = repository.save(empleado);
+
+        MvcResult result = mockMvc.perform(get("/empleados/{id}", savedEmpleado.getId()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        EmpleadoDTO response = mapper.readValue(content, EmpleadoDTO.class);
+
+        assertEquals(empleado.getNombre(), response.getNombre());
+        assertEquals(empleado.getApellido(), response.getApellido());
+        // Add more assertions as needed
+    }
+
+    @Test
+    @DisplayName("PUT /empleados/{id} should update the employee record")
+    void updateEmpleadoTest() throws Exception {
+        Empleado empleado = new Empleado();
+        empleado.setNombre("Jane");
+        empleado.setApellido("Doe");
+        empleado.setEmail("jane.doe@example.com");
+        empleado.setPuesto("Product Manager");
+        empleado.setDepartamento("Management");
+
+        Empleado savedEmpleado = repository.save(empleado);
+
+        // Update empleado data
+        savedEmpleado.setNombre("Jane Updated");
+        savedEmpleado.setApellido("Doe Updated");
+        savedEmpleado = repository.save(empleado);
+
+        mockMvc.perform(put("/empleados/{id}", savedEmpleado.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(savedEmpleado)))
+                .andExpect(status().isOk());
+
+        //
+        Empleado updatedEmpleado = repository.findById(savedEmpleado.getId()).orElse(null);
+        assertNotNull(updatedEmpleado);
+        assertEquals("Jane Updated", updatedEmpleado.getNombre());
+        assertEquals("Doe Updated", updatedEmpleado.getApellido());
+
+    }
+
+    @Test
+    @DisplayName("POST /empleados should create a new employee")
+    void createEmployeeTest() throws Exception {
+        String requestBody = "{\"nombre\":\"Juan\",\"apellido\":\"Perez\",\"email\":\"juan.perez@example.com\",\"puesto\":\"Desarrollador\",\"departamento\":\"IT\"}";
+
+        mockMvc.perform(post("/empleados")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @DisplayName("GET /empleados/{id} should return the correct employee")
+    void getEmployeeByIdTest() throws Exception {
+        // Crear un empleado para buscar por su ID
+        String requestBody = "{\"nombre\":\"Juan\",\"apellido\":\"Perez\",\"email\":\"juan.perez@example.com\",\"puesto\":\"Desarrollador\",\"departamento\":\"IT\"}";
+    
+        // Realizar la solicitud POST para crear un nuevo empleado
+        MvcResult postResult = mockMvc.perform(post("/empleados")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists())
+                .andReturn();
+    
+        // Obtener el ID del empleado creado a partir de la respuesta
+        String employeeId = postResult.getResponse().getContentAsString();
+    
+        // Realizar una solicitud GET para obtener el empleado por su ID usando el ID almacenado
+        mockMvc.perform(get("/empleados/{id}", employeeId))
+                .andExpect(status().isOk());
+    }
+    
+
+
+    @Test
+    @DisplayName("PUT /empleados/{id} should update the employee record")
+    void updateEmployeeTest() throws Exception {
+        // Crear un empleado para luego actualizarlo
+        String requestBody = "{\"nombre\":\"Juan\",\"apellido\":\"Perez\",\"email\":\"juan.perez@example.com\",\"puesto\":\"Desarrollador\",\"departamento\":\"IT\"}";
+
+        mockMvc.perform(post("/empleados")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists())
+                .andReturn();
+
+        // Realizar una solicitud PUT para actualizar los detalles del empleado
+        String updatedRequestBody = "{\"nombre\":\"Juan Actualizado\",\"apellido\":\"Perez\",\"email\":\"juan.perez@example.com\",\"puesto\":\"Desarrollador Senior\",\"departamento\":\"IT\"}";
+
+        mockMvc.perform(put("/empleados/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updatedRequestBody))
+                .andExpect(status().isOk());
+    }
+
 }
