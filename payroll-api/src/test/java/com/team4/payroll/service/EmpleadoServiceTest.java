@@ -4,6 +4,7 @@ import com.team4.payroll.dto.CreateEmpleadoDTO;
 import com.team4.payroll.dto.EmpleadoDTO;
 import com.team4.payroll.dto.UpdateEmpleadoDTO;
 import com.team4.payroll.exception.EmpleadoNotFoundException;
+import com.team4.payroll.mapper.EmpleadoMapper;
 import com.team4.payroll.model.Empleado;
 import com.team4.payroll.repository.EmpleadoRepository;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +35,12 @@ class EmpleadoServiceTest {
 
     @Autowired
     private EmpleadoService service;
+
+    @Autowired
+    @Mock
+    private EmpleadoMapper mapper; 
+    
+
 
     @Test
     @DisplayName("Service should be injected")
@@ -123,4 +131,85 @@ class EmpleadoServiceTest {
 
         verify(repository, times(1)).deleteById(3l);
     }
+
+    @Test
+    @DisplayName("Test findById when employee exists")
+    void testFindByIdWhenExists() throws EmpleadoNotFoundException {
+        // Mock repository to return an Empleado object with sample values
+        EmpleadoDTO empleadoDto = new EmpleadoDTO();
+        empleadoDto.setId(33L);
+        empleadoDto.setNombre("John");
+        empleadoDto.setApellido("Doe");
+        empleadoDto.setDepartamento("IT");
+        empleadoDto.setEmail("Doe@it.com");
+        empleadoDto.setPuesto("Leader");
+
+        Empleado model = new Empleado();
+        model.setId(33L); // Set the correct ID
+        model.setNombre(empleadoDto.getNombre());
+        model.setApellido(empleadoDto.getApellido());
+        model.setDepartamento(empleadoDto.getDepartamento());
+        model.setEmail(empleadoDto.getEmail());
+        model.setPuesto(empleadoDto.getPuesto());
+
+        // Mock repository
+        when(repository.findById(anyLong())).thenReturn(Optional.of(model));
+
+        // Call the method being tested
+        EmpleadoDTO result = service.findById(33L); // Pass the correct ID
+
+        // Assert the result
+        assertEquals(empleadoDto, result);
+    }
+    
+    
+
+    @Test  
+    @DisplayName("Test should trown an excetion if not exist")
+    void testFindByIdWhenNotExists() {
+        // Mock repository
+        EmpleadoRepository repository = mock(EmpleadoRepository.class);
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // Create EmpleadoService with the mocked repository
+        EmpleadoService service = new EmpleadoService(repository, mapper);
+
+        // Call the method being tested and assert that it throws EmpleadoNotFoundException
+        assertThrows(EmpleadoNotFoundException.class, () -> {
+            service.findById(1L);
+        });
+    }
+
+
+    @Test
+void testDeleteByIdWhenEmployeeExists() throws EmpleadoNotFoundException {
+    // Mock the repository to return true when existsById is called
+    when(repository.existsById(anyLong())).thenReturn(true);
+
+    // Execute the method and expect EmpleadoNotFoundException to be thrown
+    assertThrows(EmpleadoNotFoundException.class, () -> {
+        service.deleteById(1L); // Pass any ID you want to test
+    });
+
+    // Verify that deleteById method is not called
+    verify(repository, never()).deleteById(anyLong());
+}
+
+@Test
+void testUpdateWhenEmployeeNotFound() {
+    // Mock the repository to return an empty Optional
+    when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+    // Execute the method and expect EmpleadoNotFoundException to be thrown
+    assertThrows(EmpleadoNotFoundException.class, () -> {
+        service.update(1L, new UpdateEmpleadoDTO()); // Pass any ID you want to test
+    });
+
+    // Verify that update method of mapper and save method of repository are not called
+    verify(mapper, never()).update(any(Empleado.class), any(UpdateEmpleadoDTO.class));
+    verify(repository, never()).save(any(Empleado.class));
+}
+
+
+
 }
