@@ -18,7 +18,9 @@ jobs:
             java-version: 17
 
       - name: Configuración de Gradle
-        uses: gradle/gradle-build-action@v2
+        run: gradle build
+        working-directory: ${{ github.workspace }}/payroll-api
+          
 
       - name: Compilar el proyecto
         run: gradle build
