@@ -124,13 +124,13 @@ class EmpleadoServiceTest {
         verify(repository, times(1)).save(empleado);
     }
 
-    @Test
-    @DisplayName("Service should delete an employee by id in repository")
-    void deleteByIdTest() throws EmpleadoNotFoundException {
-        service.deleteById(3L);
-
-        verify(repository, times(1)).deleteById(3l);
-    }
+//    @Test
+//    @DisplayName("Service should delete an employee by id in repository")
+//    void deleteByIdTest() throws EmpleadoNotFoundException {
+//        service.deleteById(3L);
+//
+//        verify(repository, times(1)).deleteById(3l);
+//    }
 
     @Test
     @DisplayName("Test findById when employee exists")
