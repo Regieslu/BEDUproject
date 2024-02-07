@@ -71,7 +71,8 @@ public class EmpleadoController {
     @Operation(summary = "Actualizar empleado por ID")
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Param("id") long id, @Valid @RequestBody UpdateEmpleadoDTO dto) throws EmpleadoNotFoundException {
+    //public void update(@Param("id") long id, @Valid @RequestBody UpdateEmpleadoDTO dto) throws EmpleadoNotFoundException {
+    public void update(@PathVariable("id") long id, @Valid @RequestBody UpdateEmpleadoDTO dto) throws EmpleadoNotFoundException {
         service.update(id, dto);
     }
 
