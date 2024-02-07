@@ -189,7 +189,8 @@ class EmpleadoControllerE2ETest {
         mockMvc.perform(put("/empleados/{id}", savedEmpleado.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(savedEmpleado)))
-                .andExpect(status().isOk());
+                //.andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         //
         Empleado updatedEmpleado = repository.findById(savedEmpleado.getId()).orElse(null);
