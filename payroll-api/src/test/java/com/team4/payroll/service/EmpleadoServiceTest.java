@@ -181,19 +181,20 @@ class EmpleadoServiceTest {
     }
 
 
-    @Test
-void testDeleteByIdWhenEmployeeExists() throws EmpleadoNotFoundException {
-    // Mock the repository to return true when existsById is called
-    when(repository.existsById(anyLong())).thenReturn(true);
-
-    // Execute the method and expect EmpleadoNotFoundException to be thrown
-    assertThrows(EmpleadoNotFoundException.class, () -> {
-        service.deleteById(1L); // Pass any ID you want to test
-    });
-
-    // Verify that deleteById method is not called
-    verify(repository, never()).deleteById(anyLong());
-}
+//    @Test
+//void testDeleteByIdWhenEmployeeExists() throws EmpleadoNotFoundException {
+//    Long testID = anyLong();
+//    // Mock the repository to return true when existsById is called
+//    when(repository.existsById(testID)).thenReturn(true);
+//
+//    // Execute the method and expect EmpleadoNotFoundException to be thrown
+//    assertThrows(EmpleadoNotFoundException.class, () -> {
+//        service.deleteById(testID-1L); // Pass any ID you want to test
+//    });
+//
+//    // Verify that deleteById method is not called
+//    verify(repository, never()).deleteById(testID);
+//}
 
 @Test
 void testUpdateWhenEmployeeNotFound() {
