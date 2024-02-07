@@ -2,6 +2,8 @@ name: Interviewer API CI/CD
 
 on: 
   push:
+    branches:
+      - main
 
 jobs:
   continuous-integration:
@@ -10,6 +12,9 @@ jobs:
       - name: Obtener los últimos cambios del repositorio
         uses: actions/checkout@v4
 
+      # Agregar el paso para cambiar al directorio 'payroll-api'
+      - name: Cambiar al directorio 'payroll-api'
+        run: cd payroll-api
 
       - name: Instalar Java 17
         uses: actions/setup-java@v4
@@ -18,9 +23,7 @@ jobs:
             java-version: 17
 
       - name: Configuración de Gradle
-        run: gradle build
-        working-directory: ${{ github.workspace }}/payroll-api
-          
+        uses: gradle/gradle-build-action@v2
 
       - name: Compilar el proyecto
         run: gradle build
