@@ -10,8 +10,8 @@ class ApiPayrollApplicationTests {
 
 	@Test
     void contextLoads() {
-        // Add an assertion to ensure that the Spring context loads successfully
-        assertTrue(true); // You can replace true with any condition you want to assert
+        
+        assertTrue(true); 
     }
 
 }
