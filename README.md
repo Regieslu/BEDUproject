@@ -49,4 +49,14 @@ annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+## Static Analisys Code using Sonar
+![image](https://github.com/Regieslu/BEDUproject/assets/74982686/5217c203-2048-47e7-81f2-73464c457745)
+
+## Report 
+![image](https://github.com/Regieslu/BEDUproject/assets/74982686/57ecae62-f572-4ef5-bc4a-0405117e2eac)
+
+## Jococo 
+![image](https://github.com/Regieslu/BEDUproject/assets/74982686/43a3bc55-c119-49b4-8774-89d3f3d5c13b)
+
+
 ## BEDU 
