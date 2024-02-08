@@ -16,7 +16,7 @@ import java.util.List;
 
 @Tag(name = "Endpoints de Empleados", description = "CRUD de empleados")
 @RestController
-@CrossOrigin(origins = "https://sglsergiogarcia.github.io/")
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("empleados")
 public class EmpleadoController {
 
@@ -31,6 +31,7 @@ public class EmpleadoController {
 
     @Operation(summary = "Obtener todos los empleados", description = "Obtener la lista que contiene todos los empleados")
     @GetMapping({"", "/"})
+    @CrossOrigin(origins = "http://localhost:8080")
     @ResponseStatus(HttpStatus.OK)
     public List<EmpleadoDTO> findAll() {
         return service.findAll();
@@ -52,6 +53,7 @@ public class EmpleadoController {
 
     @Operation(summary = "Eliminar empleado por ID")
     @DeleteMapping("{id}")
+    @CrossOrigin(origins = "http://localhost:8080")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws EmpleadoNotFoundException {
         service.deleteById(id);
@@ -59,6 +61,7 @@ public class EmpleadoController {
 
     @Operation(summary = "Actualizar empleado por ID")
     @PutMapping("{id}")
+    @CrossOrigin(origins = "http://localhost:8080")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     //public void update(@Param("id") long id, @Valid @RequestBody UpdateEmpleadoDTO dto) throws EmpleadoNotFoundException {
     public void update(@PathVariable("id") long id, @Valid @RequestBody UpdateEmpleadoDTO dto) throws EmpleadoNotFoundException {
